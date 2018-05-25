@@ -103,7 +103,7 @@ namespace date
 #    define CONSTCD11 constexpr
 #    define CONSTCD14 constexpr
 #    define NOEXCEPT noexcept
-#    define NOEXCEPT_COND(...) noexcept(__VA_ARGS__)
+#    define NOEXCEPT_COND(...)/* noexcept(__VA_ARGS__)*/
 #  endif
 
 #elif defined(__SUNPRO_CC) && __SUNPRO_CC <= 0x5150
@@ -7313,8 +7313,8 @@ from_stream(std::basic_istream<CharT, Traits>& is, const CharT* fmt,
                 fds.wd = weekday{static_cast<unsigned>(wd)};
             if (abbrev != nullptr)
                 *abbrev = std::move(temp_abbrev);
-            if (offset != nullptr)
-                *offset = temp_offset;
+            if (offset != nullptr && temp_offset != not_a_offset)
+              *offset = temp_offset;
         }
        return is;
     }
